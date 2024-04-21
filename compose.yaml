@@ -1,0 +1,10 @@
+services:
+  mysql:
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=${GLP_DATABASE_NAME}'
+      - 'MYSQL_PASSWORD=${GLP_DATABASE_PASSWORD}'
+      - 'MYSQL_ROOT_PASSWORD=${GLP_DATABASE_ROOT_PASSWORD}'
+      - 'MYSQL_USER=${GLP_DATABASE_USERNAME}'
+    ports:
+      - '3306'
