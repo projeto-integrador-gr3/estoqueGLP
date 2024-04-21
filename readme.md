@@ -1,4 +1,4 @@
-# Budget Control
+# Estoque GLP
 
 Aplicação para Controle de estoque para revendas de GLP.
 
