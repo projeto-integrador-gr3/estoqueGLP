@@ -5,9 +5,10 @@ spring:
     compose:
       enabled: false
   jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    generate-dll: true
+    hibernate:
+      ddl-auto: update
   datasource:
     username: ${GLP_DATABASE_USERNAME}
     password: ${GLP_DATABASE_PASSWORD}

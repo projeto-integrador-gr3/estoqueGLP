@@ -5,3 +5,8 @@ spring:
   docker:
     compose:
       enabled: true
+  jpa:
+    show-sql: true
+    generate-dll: true
+    hibernate:
+      ddl-auto: update
