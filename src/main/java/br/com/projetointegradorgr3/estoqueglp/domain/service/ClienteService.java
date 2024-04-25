@@ -32,7 +32,7 @@ public class ClienteService {
     }
 
     public Page<Cliente> buscar(Pageable pageable) {
-        return repository.findAll(pageable);
+        return repository.findAllByDeletedIsFalse(pageable);
     }
 
     public Optional<Cliente> buscar(Long id) {

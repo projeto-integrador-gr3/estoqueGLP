@@ -27,7 +27,7 @@ public class ProdutoService {
     }
 
     public Page<Produto> buscar(Pageable pageable) {
-        return repository.findAll(pageable);
+        return repository.findAllByDeletedIsFalse(pageable);
     }
 
     public void deletar(Long id) {
