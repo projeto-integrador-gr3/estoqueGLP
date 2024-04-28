@@ -1,0 +1,50 @@
+.App {
+  text-align: center;
+  height: 100vh; /* Adiciona altura total da viewport */
+  background-color: #282c34; /* Define cor de fundo */
+  color: white; /* Define cor do texto */
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+/* @media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+} */
+
+.App-header {
+  min-height: 100vh; /* Define altura mínima para ocupar toda a viewport */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  padding: 20px; /* Adiciona espaço interno */
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.estoque-final {
+  background-color: #fff; /* Cor de fundo branca */
+  color: #000; /* Cor do texto preto */
+  text-align: center; /* Centralizar o texto */
+  padding: 10px; /* Adicionar preenchimento interno */
+  border-radius: 5px; /* Adicionar bordas arredondadas */
+  font-size: 24px; /* Tamanho da fonte */
+  font-weight: bold; /* Fonte em negrito */
+}
