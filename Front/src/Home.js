@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-
-function App() {
+function Home() {
   const [entrada, setEntrada] = useState("");
   const [saida, setSaida] = useState("");
   const [tipoEstoque, setTipoEstoque] = useState("P13");
@@ -32,11 +31,20 @@ function App() {
 
   return (
     <div className="container-fluid">
-      {" "}
-      {}
-      
+      <header className="App-login-header bg-dark text-light p-3 rounded">
+        <div className="btn-group" role="group" aria-label="Opções de Login">
+          <a className="btn btn-outline-light" href="/login">
+            Login
+          </a>
+          <a
+            className="btn btn-outline-light"
+            href="./cadastro" 
+          >
+            Cadastro
+          </a>
+        </div>
+      </header>
       <header className="App-header bg-dark text-light p-5 rounded">
-        
         <img src={logo} className="App-logo" alt="logo" />
         <h1 className="mb-4">Controle de Estoque de GLP</h1>
         <div className="mt-3">
@@ -96,4 +104,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
