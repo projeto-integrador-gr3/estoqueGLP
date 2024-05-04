@@ -26,7 +26,7 @@ public class ProdutoController {
         Produto produto = service.cadastrar(produtoDto.converter());
 
         return ResponseEntity
-                .created(uriBuilder.path("/produtos/{}")
+                .created(uriBuilder.path("/produtos/{id}")
                         .buildAndExpand(produto.getId())
                         .toUri())
                 .body(new ProdutoDto(produto));

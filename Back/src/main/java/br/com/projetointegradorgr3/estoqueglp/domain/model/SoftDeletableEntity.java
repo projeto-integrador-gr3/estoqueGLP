@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 public abstract class SoftDeletableEntity {
 
     @Column(name = "deletado")
-    private boolean deleted;
+    protected boolean deleted;
 
     @Column(name = "deletado_em")
-    private LocalDateTime deletedDate;
+    protected LocalDateTime deletedDate;
 }
