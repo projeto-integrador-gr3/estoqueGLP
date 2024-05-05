@@ -13,15 +13,16 @@ CREATE TABLE usuarios (
 -- Tabela de produtos
 CREATE TABLE produto (
     id_produto INT AUTO_INCREMENT PRIMARY KEY,
-    id_fornecedor INT FOREIGN KEY,
+    id_fornecedor INT,
     nome_produto VARCHAR(100) NOT NULL,
+    FOREIGN KEY (id_fornecedor) REFERENCES fornecedores(id_fornecedor)
 );
 
 -- Tabela de fornecedores
 CREATE TABLE fornecedores (
     id_fornecedor INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    endereco VARCHAR(100) NOT NULL,
+    endereco VARCHAR(100),
     telefone VARCHAR(20) NOT NULL
 );
 
