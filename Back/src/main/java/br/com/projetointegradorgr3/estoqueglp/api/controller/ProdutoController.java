@@ -1,5 +1,6 @@
 package br.com.projetointegradorgr3.estoqueglp.api.controller;
 
+import br.com.projetointegradorgr3.estoqueglp.api.dto.EstoqueDto;
 import br.com.projetointegradorgr3.estoqueglp.api.dto.ProdutoDto;
 import br.com.projetointegradorgr3.estoqueglp.domain.model.Produto;
 import br.com.projetointegradorgr3.estoqueglp.domain.service.ProdutoService;
@@ -61,5 +62,11 @@ public class ProdutoController {
         service.deletar(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/estoque")
+    public ResponseEntity<ProdutoDto> atualizarEstoque(@PathVariable("id") Long id, @RequestBody @Valid EstoqueDto estoqueDto) {
+        Produto produto = service.atualizarEstoque(id, estoqueDto.variacaoEstoque());
+        return ResponseEntity.ok(new ProdutoDto(produto));
     }
 }

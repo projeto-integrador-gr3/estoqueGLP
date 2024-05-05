@@ -21,4 +21,8 @@ public class RevendedorService {
         usuarioService.cadastrar(revendedor.getUsuario());
         return repository.save(revendedor);
     }
+
+    public Revendedor buscarPorUsername(String username) {
+        return repository.findByUsuarioUsername(username);
+    }
 }

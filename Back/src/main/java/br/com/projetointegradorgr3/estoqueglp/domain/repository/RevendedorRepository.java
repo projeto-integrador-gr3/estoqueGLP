@@ -5,4 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RevendedorRepository extends SoftDeletableRepository<Revendedor, Long> {
+
+    Revendedor findByUsuarioUsername(String username);
 }

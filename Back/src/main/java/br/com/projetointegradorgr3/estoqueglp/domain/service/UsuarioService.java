@@ -3,6 +3,7 @@ package br.com.projetointegradorgr3.estoqueglp.domain.service;
 import br.com.projetointegradorgr3.estoqueglp.domain.exception.UsuarioExistenteException;
 import br.com.projetointegradorgr3.estoqueglp.domain.model.Usuario;
 import br.com.projetointegradorgr3.estoqueglp.domain.repository.UsuarioRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,5 +33,9 @@ public class UsuarioService implements UserDetailsService {
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 
         return repository.save(usuario);
+    }
+
+    public String usuarioLogado() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

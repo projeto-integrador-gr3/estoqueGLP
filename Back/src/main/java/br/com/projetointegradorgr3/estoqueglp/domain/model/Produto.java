@@ -23,6 +23,9 @@ public class Produto extends SoftDeletableEntity {
 
     private LocalDateTime dataRecebimento;
 
+    @ManyToOne
+    private Revendedor revendedor;
+
     public Long getId() {
         return id;
     }
@@ -69,5 +72,13 @@ public class Produto extends SoftDeletableEntity {
 
     public void setDataRecebimento(LocalDateTime dataRecebimento) {
         this.dataRecebimento = dataRecebimento;
+    }
+
+    public Revendedor getRevendedor() {
+        return revendedor;
+    }
+
+    public void setRevendedor(Revendedor revendedor) {
+        this.revendedor = revendedor;
     }
 }
