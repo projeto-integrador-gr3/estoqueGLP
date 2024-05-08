@@ -34,7 +34,6 @@ CREATE TABLE controle_estoque (
     id_fornecedor INT,
     qtd_entrada INT,
     qtd_vendas INT,
-    qtd_estoque INT,
     data_transacao DATE NOT NULL,
     FOREIGN KEY (id_produto) REFERENCES produto(id_produto),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
