@@ -2,12 +2,7 @@ body {
   margin: 0;
   font-family: sans-serif;
 }
-. {
-  text-align: center;
-  height: 100vh; 
-  background-color: #282c34; 
-  color: white; 
-}
+
 
 .App-logo {
   height: 40vmin;

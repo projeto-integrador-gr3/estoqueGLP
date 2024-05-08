@@ -5,6 +5,7 @@
   color: white; /* Define cor do texto */
 }
 
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -47,4 +48,8 @@
   border-radius: 7px; 
   font-size: 24px; 
   font-weight: bold; 
+}
+
+.navbar {
+  min-height: 70px; 
 }

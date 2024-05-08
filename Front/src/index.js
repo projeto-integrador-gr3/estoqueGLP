@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.css'; 
+import './css/index.css'; 
 import App from './App';
 import Cadastro from './Cadastro';
 import Login from './Login';
@@ -32,7 +32,7 @@ function Index() {
             <ul className="navbar-nav">
               <li className="nav-item">
                 <button
-                  className="nav-link btn btn-link"
+                  className="btn btn-link"
                   onClick={() => setPage('home')}
                 >
                   Home
@@ -40,7 +40,7 @@ function Index() {
               </li>
               <li className="nav-item">
                 <button
-                  className="nav-link btn btn-link"
+                  className="btn btn-link"
                   onClick={() => setPage('cadastro')}
                 >
                   Cadastro
@@ -48,7 +48,7 @@ function Index() {
               </li>
               <li className="nav-item">
                 <button
-                  className="nav-link btn btn-link"
+                  className="btn btn-link"
                   onClick={() => setPage('login')}
                 >
                   Login

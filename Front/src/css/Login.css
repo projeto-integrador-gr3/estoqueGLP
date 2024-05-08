@@ -1,0 +1,24 @@
+body {
+  text-align: center;
+  height: max-content; 
+  background-color: #282c34; 
+  color: white; 
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.card-link {
+  color: #61dafb;
+}
+
+input.form-control {
+  color: black; /* Muda a cor do texto para preto */
+}
+
+input[type="text"],
+input[type="password"] {
+  color: black; /* Muda a cor do texto para preto */
+}

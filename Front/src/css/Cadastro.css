@@ -1,0 +1,33 @@
+/* Estilos para a página de cadastro */
+.container-fluid {
+    background-color: #282c34;
+    color: white;
+  }
+  
+  .card-header {
+    background-color: #343a40;
+    color: white;
+  }
+  
+  .form-label {
+    color: white;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+
+  input.form-control {
+    color: black; /* Muda a cor do texto para preto */
+  }
+
+  input[type="text"],
+input[type="password"] {
+  color: black; /* Muda a cor do texto para preto */
+}

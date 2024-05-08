@@ -1,7 +1,7 @@
 import logo from "../src/Image/gas.jpg";
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+import "./css/App.css";
 
 function Home() {
   const [entrada, setEntrada] = useState("");
