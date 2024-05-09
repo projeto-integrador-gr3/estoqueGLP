@@ -1,98 +1,36 @@
-import logo from "../src/Image/gas.jpg";
-import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./css/App.css";
-
+// App.js
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Importe BrowserRouter, Routes e Route
+import TransacaoPage from "./TransacaoPage";
+import "./App.css";
+import Login from "./Login";
+import Signup from "./Signup";
+import backgroundImage from "./Imagens/GLP.png";
+import Header from "./Header";
 
 function App() {
-  const [entrada, setEntrada] = useState("");
-  const [saida, setSaida] = useState("");
-  const [tipoEstoque, setTipoEstoque] = useState("P13");
-  const [estoqueFinal, setEstoqueFinal] = useState(0);
-
-  const handleTipoEstoqueChange = (e) => {
-    setTipoEstoque(e.target.value);
-  };
-
-  const handleEntradaChange = (e) => {
-    setEntrada(e.target.value);
-  };
-
-  const handleSaidaChange = (e) => {
-    setSaida(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Tipo de Estoque:", tipoEstoque);
-    console.log("Entrada:", entrada);
-    console.log("Saída:", saida);
-    setEstoqueFinal(0);
-  };
-
   return (
-    <div className="container-fluid">
+    <Router>
       {" "}
-      {}
-      
-      <header className="App-header bg-dark text-light p-5 rounded">
-        
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1 className="mb-4">Controle de Estoque de GLP</h1>
-        <div className="mt-3">
-          <p className="mb-1">Estoque Final:</p>
-          <div className="estoque-final">{estoqueFinal}</div>
-        </div>
-        <div className="mt-3"></div>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="tipoEstoque" className="form-label">
-              Tipo de Estoque:
-            </label>
-            <select
-              id="tipoEstoque"
-              value={tipoEstoque}
-              onChange={handleTipoEstoqueChange}
-              className="form-select"
-            >
-              <option value="">Selecione o tipo de estoque</option>
-              <option value="P13">P13</option>
-              <option value="P20">P20</option>
-              <option value="P45">P45</option>
-            </select>
-          </div>
-          <div className="d-flex mb-3">
-            <div className="me-3">
-              <label htmlFor="entrada" className="form-label">
-                Entrada de Estoque:
-              </label>
-              <input
-                type="number"
-                id="entrada"
-                value={entrada}
-                onChange={handleEntradaChange}
-                className="form-control"
-              />
-            </div>
-            <div>
-              <label htmlFor="saida" className="form-label">
-                Saída de Estoque:
-              </label>
-              <input
-                type="number"
-                id="saida"
-                value={saida}
-                onChange={handleSaidaChange}
-                className="form-control"
-              />
-            </div>
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Atualizar Estoque
-          </button>
-        </form>
-      </header>
-    </div>
+      {/* Envolve a aplicação com BrowserRouter */}
+      <div
+        className="App"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      >
+        <Header />
+
+        <Routes>
+          {" "}
+          {/* Envolve suas rotas com o componente Routes */}
+          <Route path="/" element={<Login />} />{" "}
+          {/* Define a rota para a página de login */}
+          <Route path="/cadastro" element={<Signup />} />{" "}
+          {/* Define a rota para a página de login */}
+          <Route path="/transacoes" element={<TransacaoPage />} />{" "}
+          {/* Adicione a rota para a página de transações */}
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

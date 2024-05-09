@@ -1,0 +1,44 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-y: hidden; /* Remover a barra de rolagem vertical */
+  }
+
+.transacao-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .transacao-form {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .transacao-form h2 {
+    margin-bottom: 20px;
+  }
+  
+  .transacao-form form {
+    width: 300px;
+  }
+  
+  .transacao-form form label {
+    font-weight: bold;
+  }
+  
+  .transacao-form form input[type="text"],
+  .transacao-form form input[type="number"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .transacao-form form button {
+    width: 100%;
+  }
+  
