@@ -1,28 +1,25 @@
 package br.com.projetointegradorgr3.estoqueglp.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
-@Entity
+//@Entity
 public class Revendedor extends SoftDeletableEntity {
 
-    @Id
-    @GeneratedValue
+  //  @Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private Long id;
+    private Integer id;
     private String nome;
     private String telefone;
 
-    @OneToOne
+    //@OneToOne
     private Usuario usuario;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

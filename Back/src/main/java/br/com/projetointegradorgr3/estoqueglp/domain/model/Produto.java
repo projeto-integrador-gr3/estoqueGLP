@@ -1,36 +1,33 @@
 package br.com.projetointegradorgr3.estoqueglp.domain.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-@Entity
-public class Produto extends SoftDeletableEntity {
+@Entity(name = "produto")
+public class Produto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_produto")
+    private Integer id;
 
+    @Column(name = "nome_produto")
     private String nome;
 
-    private String descricao;
-
-    private BigDecimal preco;
-
-    @Column(name = "qtd_estoque")
-    private Integer estoque;
-
-    private LocalDateTime dataRecebimento;
-
     @ManyToOne
-    private Revendedor revendedor;
+    @JoinColumn(name = "id_fornecedor")
+    private Fornecedor fornecedor;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -42,43 +39,11 @@ public class Produto extends SoftDeletableEntity {
         this.nome = nome;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public Fornecedor getFornecedor() {
+        return fornecedor;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public BigDecimal getPreco() {
-        return preco;
-    }
-
-    public void setPreco(BigDecimal preco) {
-        this.preco = preco;
-    }
-
-    public Integer getEstoque() {
-        return estoque;
-    }
-
-    public void setEstoque(Integer estoque) {
-        this.estoque = estoque;
-    }
-
-    public LocalDateTime getDataRecebimento() {
-        return dataRecebimento;
-    }
-
-    public void setDataRecebimento(LocalDateTime dataRecebimento) {
-        this.dataRecebimento = dataRecebimento;
-    }
-
-    public Revendedor getRevendedor() {
-        return revendedor;
-    }
-
-    public void setRevendedor(Revendedor revendedor) {
-        this.revendedor = revendedor;
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
     }
 }

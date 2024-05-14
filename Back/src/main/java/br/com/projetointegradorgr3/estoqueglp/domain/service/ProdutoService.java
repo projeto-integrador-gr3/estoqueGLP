@@ -16,20 +16,18 @@ public class ProdutoService {
 
     private final ProdutoRepository repository;
     private final UsuarioService usuarioService;
-    private final RevendedorService revendedorService;
     private static final String RECURSO = "produto";
 
-    public ProdutoService(ProdutoRepository repository, UsuarioService usuarioService, RevendedorService revendedorService) {
+    public ProdutoService(ProdutoRepository repository, UsuarioService usuarioService) {
         this.repository = repository;
         this.usuarioService = usuarioService;
-        this.revendedorService = revendedorService;
     }
 
     public Produto cadastrar(Produto produto) {
         String usuarioLogado = usuarioService.usuarioLogado();
-        Revendedor revendedor = revendedorService.buscarPorUsername(usuarioLogado);
+        /*Revendedor revendedor = revendedorService.buscarPorUsername(usuarioLogado);
         produto.setRevendedor(revendedor);
-        produto.setEstoque(0);
+        produto.setEstoque(0);*/
 
         return repository.save(produto);
     }
@@ -42,27 +40,26 @@ public class ProdutoService {
     }
 
     public Page<Produto> buscar(Pageable pageable) {
-        String usuarioLogado = usuarioService.usuarioLogado();
-        return repository.findAllByDeletedIsFalseAndRevendedorUsuarioUsername(pageable, usuarioLogado);
+        return repository.findAll(pageable);
     }
 
-    public void deletar(Long id) {
+    public void deletar(Integer id) {
         Produto produto = buscar(id).orElseThrow(() -> new NotFoundException(RECURSO));
         repository.deleteById(produto.getId());
     }
 
-    public Optional<Produto> buscar(Long id) {
-        String usuarioLogado = usuarioService.usuarioLogado();
-        return repository.findById(id).filter(produto -> usuarioLogado.equals(produto.getRevendedor().getUsuario().getUsername()));
+    public Optional<Produto> buscar(Integer id) {
+        //String usuarioLogado = usuarioService.usuarioLogado();
+        return repository.findById(id);
     }
 
-    public Produto atualizarEstoque(Long id, int quantidade) {
+    public Produto atualizarEstoque(Integer id, int quantidade) {
         Produto produto = buscar(id).orElseThrow(() -> new NotFoundException(RECURSO));
-        if (produto.getEstoque() + quantidade < 0) {
+        /*if (produto.getEstoque() + quantidade < 0) {
             throw new UnprocessableEntityException("Estoque não pode ficar vazio");
         }
 
-        produto.setEstoque(produto.getEstoque() + quantidade);
+        produto.setEstoque(produto.getEstoque() + quantidade);*/
         return repository.save(produto);
     }
 }

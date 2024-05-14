@@ -6,9 +6,9 @@ spring:
       enabled: false
   jpa:
     show-sql: true
-    generate-dll: true
+    generate-dll: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
   datasource:
     username: ${GLP_DATABASE_USERNAME}
     password: ${GLP_DATABASE_PASSWORD}

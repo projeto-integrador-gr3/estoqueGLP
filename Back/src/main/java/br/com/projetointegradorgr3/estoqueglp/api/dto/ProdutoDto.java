@@ -19,8 +19,8 @@ public record ProdutoDto(String id,
         Produto produto = new Produto();
 
         produto.setNome(nome);
-        produto.setDescricao(descricao);
-        produto.setPreco(preco);
+        /*produto.setDescricao(descricao);
+        produto.setPreco(preco);*/
 
         return produto;
     }
@@ -28,11 +28,11 @@ public record ProdutoDto(String id,
     public ProdutoDto(Produto produto) {
         this(
                 String.valueOf(produto.getId()),
-                produto.getNome(),
-                produto.getDescricao(),
+                produto.getNome(), null, null, null, null
+                /*produto.getDescricao(),
                 produto.getPreco(),
                 String.valueOf(produto.getEstoque()),
-                produto.getDataRecebimento()
+                produto.getDataRecebimento()*/
         );
     }
 }

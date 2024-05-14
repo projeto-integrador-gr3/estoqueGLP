@@ -34,7 +34,7 @@ public class ProdutoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProdutoDto> atualizar(@RequestBody @Valid ProdutoDto produtoDto, @PathVariable("id") Long id) {
+    public ResponseEntity<ProdutoDto> atualizar(@RequestBody @Valid ProdutoDto produtoDto, @PathVariable("id") Integer id) {
         Produto produto = produtoDto.converter();
         produto.setId(id);
         service.atualizar(produto);
@@ -52,20 +52,20 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProdutoDto> buscar(@PathVariable("id") Long id) {
+    public ResponseEntity<ProdutoDto> buscar(@PathVariable("id") Integer id) {
 
         return service.buscar(id).map(produto -> ResponseEntity.ok(new ProdutoDto(produto))).orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deletar(@PathVariable("id") Integer id) {
         service.deletar(id);
 
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}/estoque")
-    public ResponseEntity<ProdutoDto> atualizarEstoque(@PathVariable("id") Long id, @RequestBody @Valid EstoqueDto estoqueDto) {
+    public ResponseEntity<ProdutoDto> atualizarEstoque(@PathVariable("id") Integer id, @RequestBody @Valid EstoqueDto estoqueDto) {
         Produto produto = service.atualizarEstoque(id, estoqueDto.variacaoEstoque());
         return ResponseEntity.ok(new ProdutoDto(produto));
     }
