@@ -1,14 +1,11 @@
 package br.com.projetointegradorgr3.estoqueglp.domain.service;
 
 import br.com.projetointegradorgr3.estoqueglp.domain.exception.NotFoundException;
-import br.com.projetointegradorgr3.estoqueglp.domain.exception.UnprocessableEntityException;
 import br.com.projetointegradorgr3.estoqueglp.domain.model.Produto;
-import br.com.projetointegradorgr3.estoqueglp.domain.model.Revendedor;
 import br.com.projetointegradorgr3.estoqueglp.domain.repository.ProdutoRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,8 +36,8 @@ public class ProdutoService {
         repository.save(produto);
     }
 
-    public Page<Produto> buscar(Pageable pageable) {
-        return repository.findAll(pageable);
+    public List<Produto> buscar() {
+        return repository.findAll();
     }
 
     public void deletar(Integer id) {

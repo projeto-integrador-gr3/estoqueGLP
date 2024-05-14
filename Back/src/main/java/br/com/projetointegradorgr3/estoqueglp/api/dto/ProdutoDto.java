@@ -1,38 +1,48 @@
 package br.com.projetointegradorgr3.estoqueglp.api.dto;
 
 import br.com.projetointegradorgr3.estoqueglp.domain.model.Produto;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+public record ProdutoDto(
 
-public record ProdutoDto(String id,
-                         @NotBlank String nome,
-                         @NotBlank String descricao,
-                         @Positive @NotNull BigDecimal preco,
-                         String estoque,
-                         LocalDateTime dataRecebimento) {
+        Integer id,
+
+        @NotBlank
+        @Max(100)
+        String nome,
+
+        @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+        @JsonProperty("quantidade_estoque")
+        Integer estoque,
+
+        FornecedorDto fornecedor
+) {
 
     public Produto converter() {
         Produto produto = new Produto();
 
         produto.setNome(nome);
-        /*produto.setDescricao(descricao);
-        produto.setPreco(preco);*/
+        produto.setFornecedor(fornecedor.converterId());
+
+        return produto;
+    }
+
+    public Produto converterId() {
+        Produto produto = new Produto();
+        produto.setId(id);
 
         return produto;
     }
 
     public ProdutoDto(Produto produto) {
         this(
-                String.valueOf(produto.getId()),
-                produto.getNome(), null, null, null, null
-                /*produto.getDescricao(),
-                produto.getPreco(),
-                String.valueOf(produto.getEstoque()),
-                produto.getDataRecebimento()*/
+                produto.getId(),
+                produto.getNome(),
+                produto.getQuantidadeEstoque(),
+                new FornecedorDto(produto.getFornecedor())
         );
     }
 }

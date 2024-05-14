@@ -1,12 +1,6 @@
 package br.com.projetointegradorgr3.estoqueglp.domain.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity(name = "produto")
 public class Produto {
@@ -22,6 +16,9 @@ public class Produto {
     @ManyToOne
     @JoinColumn(name = "id_fornecedor")
     private Fornecedor fornecedor;
+
+    @Transient
+    private int quantidadeEstoque;
 
     public Integer getId() {
         return id;
@@ -45,5 +42,13 @@ public class Produto {
 
     public void setFornecedor(Fornecedor fornecedor) {
         this.fornecedor = fornecedor;
+    }
+
+    public int getQuantidadeEstoque() {
+        return quantidadeEstoque;
+    }
+
+    public void setQuantidadeEstoque(int quantidadeEstoque) {
+        this.quantidadeEstoque = quantidadeEstoque;
     }
 }

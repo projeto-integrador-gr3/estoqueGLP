@@ -17,11 +17,11 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.POST, "/revendedores").permitAll())
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/login").permitAll())
+        http.authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.POST, "/usuarios", "/login").permitAll())
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.POST, "/produtos", "/fornecedores").hasRole("ADMIN"))
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll())
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable);
 
         return http.build();

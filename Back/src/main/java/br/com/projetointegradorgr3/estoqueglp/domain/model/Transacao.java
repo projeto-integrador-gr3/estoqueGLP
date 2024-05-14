@@ -29,6 +29,9 @@ public class Transacao {
     @Column(name = "data_transacao")
     private LocalDateTime data;
 
+    @Transient
+    private int estoqueAposTransacao;
+
     public Integer getId() {
         return id;
     }
@@ -75,5 +78,13 @@ public class Transacao {
 
     public void setData(LocalDateTime data) {
         this.data = data;
+    }
+
+    public int getEstoqueAposTransacao() {
+        return estoqueAposTransacao;
+    }
+
+    public void setEstoqueAposTransacao(int estoqueAposTransacao) {
+        this.estoqueAposTransacao = estoqueAposTransacao;
     }
 }

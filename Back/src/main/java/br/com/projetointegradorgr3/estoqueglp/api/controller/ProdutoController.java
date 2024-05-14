@@ -1,18 +1,28 @@
 package br.com.projetointegradorgr3.estoqueglp.api.controller;
 
-import br.com.projetointegradorgr3.estoqueglp.api.dto.EstoqueDto;
 import br.com.projetointegradorgr3.estoqueglp.api.dto.ProdutoDto;
 import br.com.projetointegradorgr3.estoqueglp.domain.model.Produto;
 import br.com.projetointegradorgr3.estoqueglp.domain.service.ProdutoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/produtos")
+@Tag(name = "Produtos")
+@SecurityRequirement(name = "basicAuth")
 public class ProdutoController {
 
     private final ProdutoService service;
@@ -22,6 +32,7 @@ public class ProdutoController {
     }
 
     @PostMapping
+    @Operation(summary = "Cadastrar novo produto")
     public ResponseEntity<ProdutoDto> cadastrar(@RequestBody @Valid ProdutoDto produtoDto, UriComponentsBuilder uriBuilder) {
 
         Produto produto = service.cadastrar(produtoDto.converter());
@@ -34,6 +45,7 @@ public class ProdutoController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Alterar informações do produto")
     public ResponseEntity<ProdutoDto> atualizar(@RequestBody @Valid ProdutoDto produtoDto, @PathVariable("id") Integer id) {
         Produto produto = produtoDto.converter();
         produto.setId(id);
@@ -43,30 +55,19 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ProdutoDto>> buscarTodos(Pageable pageable) {
-        Page<Produto> produtos = service.buscar(pageable);
+    @Operation(summary = "Buscar todos os produtos cadastrados")
+    public ResponseEntity<List<ProdutoDto>> buscarTodos() {
+        List<Produto> produtos = service.buscar();
 
-        Page<ProdutoDto> produtosDto = produtos.map(ProdutoDto::new);
+        List<ProdutoDto> produtosDto = produtos.stream().map(ProdutoDto::new).toList();
 
         return ResponseEntity.ok(produtosDto);
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Buscar produto especifico por id")
     public ResponseEntity<ProdutoDto> buscar(@PathVariable("id") Integer id) {
 
         return service.buscar(id).map(produto -> ResponseEntity.ok(new ProdutoDto(produto))).orElse(ResponseEntity.notFound().build());
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable("id") Integer id) {
-        service.deletar(id);
-
-        return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping("/{id}/estoque")
-    public ResponseEntity<ProdutoDto> atualizarEstoque(@PathVariable("id") Integer id, @RequestBody @Valid EstoqueDto estoqueDto) {
-        Produto produto = service.atualizarEstoque(id, estoqueDto.variacaoEstoque());
-        return ResponseEntity.ok(new ProdutoDto(produto));
     }
 }
