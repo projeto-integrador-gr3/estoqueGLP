@@ -37,12 +37,16 @@ public record ProdutoDto(
         return produto;
     }
 
-    public ProdutoDto(Produto produto) {
+    public ProdutoDto(Produto produto, int quantidadeEstoque) {
         this(
                 produto.getId(),
                 produto.getNome(),
-                produto.getQuantidadeEstoque(),
+                quantidadeEstoque,
                 new FornecedorDto(produto.getFornecedor())
         );
+    }
+
+    public ProdutoDto(Produto produto) {
+        this(produto, produto.getQuantidadeEstoque());
     }
 }

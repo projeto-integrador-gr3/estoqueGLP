@@ -3,6 +3,7 @@ package br.com.projetointegradorgr3.estoqueglp.api.controller;
 import br.com.projetointegradorgr3.estoqueglp.api.dto.ProdutoDto;
 import br.com.projetointegradorgr3.estoqueglp.domain.model.Produto;
 import br.com.projetointegradorgr3.estoqueglp.domain.service.ProdutoService;
+import br.com.projetointegradorgr3.estoqueglp.domain.service.TransacaoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,9 +27,11 @@ import java.util.List;
 public class ProdutoController {
 
     private final ProdutoService service;
+    private final TransacaoService transacaoService;
 
-    public ProdutoController(ProdutoService service) {
+    public ProdutoController(ProdutoService service, TransacaoService transacaoService) {
         this.service = service;
+        this.transacaoService = transacaoService;
     }
 
     @PostMapping
@@ -51,7 +54,9 @@ public class ProdutoController {
         produto.setId(id);
         service.atualizar(produto);
 
-        return ResponseEntity.ok(new ProdutoDto(produto));
+        int quantidadeEmEstoque = transacaoService.buscarQuantidadeEmEstoque(produto.getId());
+
+        return ResponseEntity.ok(new ProdutoDto(produto, quantidadeEmEstoque));
     }
 
     @GetMapping
@@ -59,7 +64,7 @@ public class ProdutoController {
     public ResponseEntity<List<ProdutoDto>> buscarTodos() {
         List<Produto> produtos = service.buscar();
 
-        List<ProdutoDto> produtosDto = produtos.stream().map(ProdutoDto::new).toList();
+        List<ProdutoDto> produtosDto = produtos.stream().map(produto -> new ProdutoDto(produto, transacaoService.buscarQuantidadeEmEstoque(produto.getId()))).toList();
 
         return ResponseEntity.ok(produtosDto);
     }
@@ -69,6 +74,6 @@ public class ProdutoController {
     public ResponseEntity<ProdutoDto> buscar(@PathVariable("id") Integer id) {
         Produto produto = service.buscar(id);
 
-        return ResponseEntity.ok(new ProdutoDto(produto));
+        return ResponseEntity.ok(new ProdutoDto(produto, transacaoService.buscarQuantidadeEmEstoque(produto.getId())));
     }
 }
