@@ -8,7 +8,6 @@ import br.com.projetointegradorgr3.estoqueglp.domain.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,14 +19,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Base64;
+
 @RestController
 @Tag(name = "Usuários")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
+    private final AuthenticationManager authenticationManager;
 
-    public UsuarioController(UsuarioService usuarioService) {
+    public UsuarioController(UsuarioService usuarioService, AuthenticationManager authenticationManager) {
         this.usuarioService = usuarioService;
+        this.authenticationManager = authenticationManager;
     }
 
     @PostMapping("/usuarios")
@@ -45,11 +48,14 @@ public class UsuarioController {
     @Operation(description = "Realizar login na plataforma")
     public ResponseEntity<TokenDto> login(@RequestBody @Valid LoginDto loginDto) {
         try {
-            //Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.login(), loginDto.senha()));
-            //boolean isAdmin = authenticate.getAuthorities().stream().map(GrantedAuthority::getAuthority).anyMatch("ADMIN"::equals);
-            throw new NotImplementedException();
+            Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.login(), loginDto.senha()));
+            boolean isAdmin = authenticate.getAuthorities().stream().map(GrantedAuthority::getAuthority).anyMatch("ROLE_ADMIN"::equals);
+
+            String token = Base64.getEncoder().encodeToString((loginDto.login() + ":" + loginDto.senha()).getBytes());
+
+            return ResponseEntity.ok(new TokenDto("Basic " + token, isAdmin));
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(403).build();
+            return ResponseEntity.status(401).build();
         }
     }
 }
