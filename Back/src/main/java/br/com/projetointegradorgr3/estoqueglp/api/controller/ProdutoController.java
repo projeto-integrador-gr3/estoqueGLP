@@ -67,7 +67,8 @@ public class ProdutoController {
     @GetMapping("/{id}")
     @Operation(summary = "Buscar produto especifico por id")
     public ResponseEntity<ProdutoDto> buscar(@PathVariable("id") Integer id) {
+        Produto produto = service.buscar(id);
 
-        return service.buscar(id).map(produto -> ResponseEntity.ok(new ProdutoDto(produto))).orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(new ProdutoDto(produto));
     }
 }

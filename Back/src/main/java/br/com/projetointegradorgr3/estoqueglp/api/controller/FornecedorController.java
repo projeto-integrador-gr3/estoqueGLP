@@ -1,11 +1,13 @@
 package br.com.projetointegradorgr3.estoqueglp.api.controller;
 
 import br.com.projetointegradorgr3.estoqueglp.api.dto.FornecedorDto;
+import br.com.projetointegradorgr3.estoqueglp.domain.exception.NotFoundException;
 import br.com.projetointegradorgr3.estoqueglp.domain.model.Fornecedor;
 import br.com.projetointegradorgr3.estoqueglp.domain.repository.FornecedorRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +28,7 @@ import java.util.List;
 public class FornecedorController {
 
     private final FornecedorRepository repository;
+    private static final String RECURSO = "Fornecedor";
 
     public FornecedorController(FornecedorRepository repository) {
         this.repository = repository;
@@ -33,6 +36,7 @@ public class FornecedorController {
 
     @PostMapping
     @Operation(summary = "Cadastrar novo fornecedor")
+    @Transactional
     public ResponseEntity<FornecedorDto> cadastrar(@RequestBody @Valid FornecedorDto fornecedorDto, UriComponentsBuilder uriBuilder) {
         Fornecedor fornecedor = repository.save(fornecedorDto.converter());
 
@@ -56,14 +60,15 @@ public class FornecedorController {
     public ResponseEntity<FornecedorDto> buscar(@PathVariable("id") Integer id) {
         return repository.findById(id)
                 .map(fornecedor -> ResponseEntity.ok(new FornecedorDto(fornecedor)))
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new NotFoundException(RECURSO, id));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Alterar informações do fornecedor")
+    @Transactional
     public ResponseEntity<FornecedorDto> alterar(@PathVariable("id") Integer id, @RequestBody FornecedorDto fornecedorDto) {
         if (!repository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException(RECURSO, id);
         }
 
         Fornecedor fornecedor = fornecedorDto.converter();
