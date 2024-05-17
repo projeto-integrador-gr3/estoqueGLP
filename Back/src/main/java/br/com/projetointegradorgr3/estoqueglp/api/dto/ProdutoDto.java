@@ -1,5 +1,6 @@
 package br.com.projetointegradorgr3.estoqueglp.api.dto;
 
+import br.com.projetointegradorgr3.estoqueglp.domain.exception.UnprocessableEntityException;
 import br.com.projetointegradorgr3.estoqueglp.domain.model.Produto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -32,6 +33,9 @@ public record ProdutoDto(
 
     public Produto converterId() {
         Produto produto = new Produto();
+        if (id == null) {
+            throw new UnprocessableEntityException("Id do produto não pode ser nulo");
+        }
         produto.setId(id);
 
         return produto;

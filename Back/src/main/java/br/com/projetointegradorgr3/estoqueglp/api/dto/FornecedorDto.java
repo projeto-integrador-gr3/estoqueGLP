@@ -1,5 +1,6 @@
 package br.com.projetointegradorgr3.estoqueglp.api.dto;
 
+import br.com.projetointegradorgr3.estoqueglp.domain.exception.UnprocessableEntityException;
 import br.com.projetointegradorgr3.estoqueglp.domain.model.Fornecedor;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -32,6 +33,11 @@ public record FornecedorDto(
 
     public Fornecedor converterId() {
         Fornecedor fornecedor = new Fornecedor();
+
+        if (id == null) {
+            throw new UnprocessableEntityException("Id do fornecedor não pode ser nulo");
+        }
+
         fornecedor.setId(id);
 
         return fornecedor;
