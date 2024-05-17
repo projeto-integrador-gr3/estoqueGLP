@@ -31,7 +31,7 @@ public class UsuarioService implements UserDetailsService {
             throw new UsuarioExistenteException(usuario.getUsername());
         }
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-        usuario.setRole("DEFAULT");
+        usuario.setRole("ROLE_DEFAULT");
 
         return repository.save(usuario);
     }
