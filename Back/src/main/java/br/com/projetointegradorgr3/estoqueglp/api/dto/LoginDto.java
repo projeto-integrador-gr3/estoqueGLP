@@ -1,15 +1,15 @@
 package br.com.projetointegradorgr3.estoqueglp.api.dto;
 
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public record LoginDto(
         @NotBlank
-        @Max(100)
+        @Size(max = 100)
         String login,
 
         @NotBlank
-        @Max(100)
+        @Size(max = 100)
         String senha
 ) {
 }

@@ -3,15 +3,15 @@ package br.com.projetointegradorgr3.estoqueglp.api.dto;
 import br.com.projetointegradorgr3.estoqueglp.domain.model.Produto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public record ProdutoDto(
 
         Integer id,
 
         @NotBlank
-        @Max(100)
+        @Size(max = 100)
         String nome,
 
         @Schema(accessMode = Schema.AccessMode.READ_ONLY)

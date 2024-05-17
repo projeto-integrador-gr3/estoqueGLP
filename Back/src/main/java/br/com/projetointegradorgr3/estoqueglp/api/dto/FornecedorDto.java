@@ -1,22 +1,22 @@
 package br.com.projetointegradorgr3.estoqueglp.api.dto;
 
 import br.com.projetointegradorgr3.estoqueglp.domain.model.Fornecedor;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public record FornecedorDto(
         Integer id,
 
         @NotBlank
-        @Max(100)
+        @Size(max = 100)
         String nome,
 
         @NotBlank
-        @Max(100)
+        @Size(max = 100)
         String endereco,
 
         @NotBlank
-        @Max(100)
+        @Size(max = 100)
         String telefone
 ) {
 

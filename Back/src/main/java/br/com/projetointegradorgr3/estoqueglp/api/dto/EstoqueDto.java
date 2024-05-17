@@ -3,6 +3,7 @@ package br.com.projetointegradorgr3.estoqueglp.api.dto;
 import br.com.projetointegradorgr3.estoqueglp.domain.model.Transacao;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.time.LocalDateTime;
 
@@ -14,9 +15,11 @@ public record EstoqueDto(
         ProdutoDto produto,
 
         @JsonProperty("quantidade_entrada")
+        @PositiveOrZero
         Integer entrada,
 
         @JsonProperty("quantidade_saida")
+        @PositiveOrZero
         Integer saida,
 
         @Schema(accessMode = Schema.AccessMode.READ_ONLY)
