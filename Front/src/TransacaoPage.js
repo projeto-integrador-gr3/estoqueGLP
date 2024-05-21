@@ -40,7 +40,7 @@ function TransacaoPage() {
             <Form.Control type="number" placeholder="Digite a quantidade de entrada" value={quantidadeEntrada} onChange={handleQuantidadeEntradaChange} />
           </Form.Group>
           <Form.Group controlId="quantidadeSaida">
-            <Form.Label>Quantidade de Saída</Form.Label>
+            <Form.Label>Quantidade de Venda</Form.Label>
             <Form.Control type="number" placeholder="Digite a quantidade de saída" value={quantidadeSaida} onChange={handleQuantidadeSaidaChange} />
           </Form.Group>
           <Button variant="primary" type="submit">
