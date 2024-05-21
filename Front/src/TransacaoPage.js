@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import './Transacaopage.css'; 
 import gasBackground from './Imagens/gas.jpg'; 
 
@@ -7,6 +7,7 @@ function TransacaoPage() {
   const [produtoId, setProdutoId] = useState('');
   const [quantidadeEntrada, setQuantidadeEntrada] = useState(0);
   const [quantidadeSaida, setQuantidadeSaida] = useState(0);
+  const [success, setSuccess] = useState('');
 
   const handleProdutoIdChange = (event) => {
     setProdutoId(event.target.value);
@@ -24,6 +25,11 @@ function TransacaoPage() {
     event.preventDefault();
     // Aqui você pode enviar os dados para a API e processar a transação
     console.log('Dados da transação:', { produtoId, quantidadeEntrada, quantidadeSaida });
+    setSuccess('Transação cadastrada com sucesso!');
+    // Limpar os campos após o envio
+    setProdutoId('');
+    setQuantidadeEntrada(0);
+    setQuantidadeSaida(0);
   };
 
   return (
