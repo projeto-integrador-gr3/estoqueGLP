@@ -1,38 +1,56 @@
 package br.com.projetointegradorgr3.estoqueglp.api.dto;
 
+import br.com.projetointegradorgr3.estoqueglp.domain.exception.UnprocessableEntityException;
 import br.com.projetointegradorgr3.estoqueglp.domain.model.Produto;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+public record ProdutoDto(
 
-public record ProdutoDto(String id,
-                         @NotBlank String nome,
-                         @NotBlank String descricao,
-                         @Positive @NotNull BigDecimal preco,
-                         String estoque,
-                         LocalDateTime dataRecebimento) {
+        Integer id,
+
+        @NotBlank
+        @Size(max = 100)
+        String nome,
+
+        @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+        @JsonProperty("quantidade_estoque")
+        Integer estoque,
+
+        FornecedorDto fornecedor
+) {
 
     public Produto converter() {
         Produto produto = new Produto();
 
         produto.setNome(nome);
-        produto.setDescricao(descricao);
-        produto.setPreco(preco);
+        produto.setFornecedor(fornecedor.converterId());
 
         return produto;
     }
 
-    public ProdutoDto(Produto produto) {
+    public Produto converterId() {
+        Produto produto = new Produto();
+        if (id == null) {
+            throw new UnprocessableEntityException("Id do produto não pode ser nulo");
+        }
+        produto.setId(id);
+
+        return produto;
+    }
+
+    public ProdutoDto(Produto produto, int quantidadeEstoque) {
         this(
-                String.valueOf(produto.getId()),
+                produto.getId(),
                 produto.getNome(),
-                produto.getDescricao(),
-                produto.getPreco(),
-                String.valueOf(produto.getEstoque()),
-                produto.getDataRecebimento()
+                quantidadeEstoque,
+                new FornecedorDto(produto.getFornecedor())
         );
+    }
+
+    public ProdutoDto(Produto produto) {
+        this(produto, produto.getQuantidadeEstoque());
     }
 }

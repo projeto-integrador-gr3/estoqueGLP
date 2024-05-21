@@ -1,23 +1,32 @@
 package br.com.projetointegradorgr3.estoqueglp.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 
-@Entity
-public class Usuario extends SoftDeletableEntity implements UserDetails {
+@Entity(name = "usuarios")
+public class Usuario implements UserDetails {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_usuario")
+    private Integer id;
+
+    @Column(name = "nome")
+    private String nome;
+
+    @Column(name = "email")
     private String username;
+
+    @Column(name = "senha")
     private String password;
-    private List<GrantedAuthority> authorities;
+
+    @Column(name = "role")
+    private String role;
 
     public Usuario() {
     }
@@ -27,12 +36,20 @@ public class Usuario extends SoftDeletableEntity implements UserDetails {
         this.password = password;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     @Override
@@ -53,32 +70,36 @@ public class Usuario extends SoftDeletableEntity implements UserDetails {
         this.password = password;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+    public String getRole() {
+        return role;
     }
 
-    public void setAuthorities(List<GrantedAuthority> authorities) {
-        this.authorities = authorities;
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role));
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return !super.deleted;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return !super.deleted;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return !super.deleted;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return !super.deleted;
+        return true;
     }
 }

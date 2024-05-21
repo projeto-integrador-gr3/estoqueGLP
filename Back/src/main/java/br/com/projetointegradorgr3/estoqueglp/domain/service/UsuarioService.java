@@ -3,6 +3,7 @@ package br.com.projetointegradorgr3.estoqueglp.domain.service;
 import br.com.projetointegradorgr3.estoqueglp.domain.exception.UsuarioExistenteException;
 import br.com.projetointegradorgr3.estoqueglp.domain.model.Usuario;
 import br.com.projetointegradorgr3.estoqueglp.domain.repository.UsuarioRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,14 +24,16 @@ public class UsuarioService implements UserDetailsService {
     @Override
     public Usuario loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        return repository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Usuário \"" + username + "\" não existe"));
+        return repository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Usuário '" + username + "' não existe"));
     }
 
+    @Transactional
     public Usuario cadastrar(Usuario usuario) {
         if (repository.findByUsername(usuario.getUsername()).isPresent()) {
             throw new UsuarioExistenteException(usuario.getUsername());
         }
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        usuario.setRole("ROLE_DEFAULT");
 
         return repository.save(usuario);
     }

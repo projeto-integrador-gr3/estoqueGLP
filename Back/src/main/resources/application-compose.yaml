@@ -7,6 +7,6 @@ spring:
       enabled: true
   jpa:
     show-sql: true
-    generate-dll: true
+    generate-dll: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate

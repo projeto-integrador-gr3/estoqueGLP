@@ -1,25 +1,29 @@
 package br.com.projetointegradorgr3.estoqueglp.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
-@Entity
-public class Cliente extends SoftDeletableEntity {
+@Entity(name = "fornecedores")
+public class Fornecedor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_fornecedor")
+    private Integer id;
+
+    @Column(name = "nome")
     private String nome;
+
+    @Column(name = "endereco")
     private String endereco;
+
+    @Column(name = "telefone")
     private String telefone;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
