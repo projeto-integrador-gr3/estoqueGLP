@@ -16,11 +16,14 @@ body, html {
   .transacao-form {
     background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 100%;
   }
   
   .transacao-form h2 {
+    text-align: center;
     margin-bottom: 20px;
   }
   
@@ -41,4 +44,13 @@ body, html {
   .transacao-form form button {
     width: 100%;
   }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  
+button[type="submit"] {
+  width: 100%;
+}
   
