@@ -19,7 +19,7 @@ function Signup() {
     setSuccess('');
 
     try {
-      const response = await axios.post('http://localhosroott:8080/usuarios', {
+      const response = await axios.post('http://localhost:8080/usuarios', {
         nome: nome,
         login: email,
         senha: senha
