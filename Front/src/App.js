@@ -1,7 +1,8 @@
 // App.js
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Importe BrowserRouter, Routes e Route
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; 
 import TransacaoPage from "./TransacaoPage";
+import Cadastro from "./Cadastro"; 
 import "./App.css";
 import Login from "./Login";
 import Signup from "./Signup";
@@ -20,14 +21,10 @@ function App() {
         <Header />
 
         <Routes>
-          {" "}
-          {/* Envolve suas rotas com o componente Routes */}
-          <Route path="/" element={<Login />} />{" "}
-          {/* Define a rota para a página de login */}
-          <Route path="/cadastro" element={<Signup />} />{" "}
-          {/* Define a rota para a página de login */}
-          <Route path="/transacoes" element={<TransacaoPage />} />{" "}
-          {/* Adicione a rota para a página de transações */}
+        <Route path="/" element={<Login />} />
+          <Route path="/cadastro" element={<Signup />} />
+          <Route path="/admin" element={<Cadastro />} /> {/* Rota para a página de cadastro */}
+          <Route path="/transacoes" element={<TransacaoPage />} />
         </Routes>
       </div>
     </Router>

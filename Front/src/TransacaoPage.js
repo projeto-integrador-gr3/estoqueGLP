@@ -12,6 +12,8 @@ function TransacaoPage() {
   const [produtos, setProdutos] = useState([]);
   const [fornecedores, setFornecedores] = useState([]);
   const [selectedFornecedorId, setSelectedFornecedorId] = useState('');
+  const [volumeEstoque, setVolumeEstoque] = useState(0); 
+  const [estoqueAtual, setEstoqueAtual] = useState(''); // Novo estado para o estoque atual
 
   useEffect(() => {
     const fetchProdutos = async () => {
@@ -32,8 +34,19 @@ function TransacaoPage() {
       }
     };
 
+    // Buscar volume de itens no estoque
+    const fetchVolumeEstoque = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/estoques/volume');
+        setVolumeEstoque(response.data.volume);
+      } catch (error) {
+        console.error('Erro ao buscar volume de estoque:', error);
+      }
+    };
+
     fetchProdutos();
     fetchFornecedores();
+    fetchVolumeEstoque(); 
   }, []);
 
   const handleProdutoIdChange = (event) => {
@@ -71,10 +84,21 @@ function TransacaoPage() {
     }
   };
 
+  // Função para buscar o estoque atual de um produto
+  const handleBuscarEstoqueAtual = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/estoques/estoqueAtual?produtoId=${produtoId}`);
+      setEstoqueAtual(response.data.estoqueAtual);
+    } catch (error) {
+      console.error('Erro ao buscar estoque atual:', error);
+    }
+  };
+
   return (
     <div className="transacao-page" style={{ backgroundImage: `url(${gasBackground})` }}>
       <div className="transacao-form">
         <h2>Cadastrar Nova Transação</h2>
+        <p>Volume de Itens no Estoque: {volumeEstoque}</p> 
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="fornecedorId">
             <Form.Label>Fornecedor</Form.Label>
@@ -107,6 +131,27 @@ function TransacaoPage() {
           </Button>
         </Form>
         {success && <Alert variant="success" className="mt-3">{success}</Alert>}
+      </div>
+
+      {/* Formulário para exibir o estoque atual */}
+      <div className="estoque-form">
+        <h2>Estoque Atual</h2>
+        <Form.Group controlId="buscarEstoque">
+          <Form.Label>Buscar Estoque por Produto</Form.Label>
+          <Form.Control as="select" value={produtoId} onChange={handleProdutoIdChange}>
+            <option value="">Selecione um produto</option>
+            {produtos.map(produto => (
+              <option key={produto.id} value={produto.id}>{produto.nome}</option>
+            ))}
+          </Form.Control>
+          <Button variant="primary" onClick={handleBuscarEstoqueAtual}>
+            Buscar
+          </Button>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Estoque Atual:</Form.Label>
+          <Form.Control type="text" readOnly value={estoqueAtual} />
+        </Form.Group>
       </div>
     </div>
   );
