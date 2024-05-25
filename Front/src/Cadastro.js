@@ -5,7 +5,7 @@ import './Cadastro.css';
 // Adicione os cabeçalhos de autenticação a todas as requisições
 axios.interceptors.request.use(config => {
   // Adicione o cabeçalho de autorização com as credenciais
-  config.headers.Authorization = 'Bearer ' + localStorage.getItem('token'); // Substitua 'token' pelo nome do item onde está armazenado o token de autenticação
+  config.headers.Authorization = localStorage.getItem('token'); // Substitua 'token' pelo nome do item onde está armazenado o token de autenticação
   
   return config;
 });
@@ -35,8 +35,9 @@ function Cadastro() {
   const handleSubmitFornecedor = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/fornecedores', fornecedor);
-      alert('Fornecedor cadastrado com sucesso!');
+      const response = await axios.post('http://localhost:8080/fornecedores', fornecedor);
+      const fornecedorId = response.data.id; 
+      alert(`Fornecedor cadastrado com sucesso! ID: ${fornecedorId}`);
       setFornecedor({
         nome: '',
         endereco: '',
@@ -51,7 +52,15 @@ function Cadastro() {
   const handleSubmitProduto = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/produtos', produto);
+      if (isNaN(produto.fornecedorId)) {
+        alert('O ID do fornecedor deve ser um número.');
+        return;
+      }
+      const produtoPayload = {
+        nome: produto.nome,
+        fornecedor: { id: produto.fornecedorId }
+      };
+      const response = await axios.post('http://localhost:8080/produtos', produtoPayload);
       alert('Produto cadastrado com sucesso!');
       setProduto({
         nome: '',
@@ -59,9 +68,14 @@ function Cadastro() {
       });
     } catch (error) {
       console.error('Erro ao cadastrar produto:', error);
+      if (error.response) {
+        console.error('Detalhes do erro:', error.response.data);
+      }
       alert('Erro ao cadastrar produto. Verifique o console para mais detalhes.');
     }
   };
+
+
 
   return (
     <div className="container">

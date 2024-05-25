@@ -48,4 +48,8 @@ public class ProdutoService {
     public Produto buscar(Integer id) {
         return repository.findById(id).orElseThrow(() -> new NotFoundException(RECURSO, id));
     }
+
+    public List<Produto> buscarPorFornecedor(Integer idFornecedor) {
+        return repository.findByFornecedorId(idFornecedor);
+    }
 }

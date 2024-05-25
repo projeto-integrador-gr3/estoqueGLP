@@ -1,3 +1,4 @@
+// Header.js
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BsMoon, BsSun } from "react-icons/bs";
@@ -5,6 +6,8 @@ import "./Header.css";
 import { AiOutlineUser } from "react-icons/ai";
 import { FaReceipt } from "react-icons/fa";
 import { Button } from "react-bootstrap";
+import { RiLogoutCircleRLine } from "react-icons/ri";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 function Header({ isLoggedIn, handleLogout }) {
   const [darkMode, setDarkMode] = useState(false);
@@ -24,10 +27,24 @@ function Header({ isLoggedIn, handleLogout }) {
     <div className={`header ${darkMode ? "dark-mode" : ""}`}>
       <div>
         {isLoggedIn ? (
-          <div className="header-item" onClick={handleLogoutClick}>
-            <AiOutlineUser className="header-icon" />
-            <span className="header-text">Logout</span>
-          </div>
+          <>
+            <div className="header-item">
+              <Link to="/transacoes" className="header-link">
+                <FaReceipt className="header-icon" />
+                <span className="header-text">Transação</span>
+              </Link>
+            </div>
+            <div className="header-item">
+              <Link to="/admin" className="header-link">
+                <IoMdAddCircleOutline className="header-icon" />
+                <span className="header-text">Produto / Fornecedor</span>
+              </Link>
+            </div>
+            <div className="header-item" onClick={handleLogoutClick}>
+              <RiLogoutCircleRLine className="header-icon" />
+              <span className="header-text">Logout</span>
+            </div>
+          </>
         ) : (
           <>
             <div className="header-item">

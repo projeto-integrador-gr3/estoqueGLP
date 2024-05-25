@@ -29,6 +29,7 @@ public class ProdutoController {
     private final ProdutoService service;
     private final TransacaoService transacaoService;
 
+
     public ProdutoController(ProdutoService service, TransacaoService transacaoService) {
         this.service = service;
         this.transacaoService = transacaoService;
@@ -75,5 +76,15 @@ public class ProdutoController {
         Produto produto = service.buscar(id);
 
         return ResponseEntity.ok(new ProdutoDto(produto, transacaoService.buscarQuantidadeEmEstoque(produto.getId())));
+    }
+
+    @GetMapping("/fornecedor/{idFornecedor}")
+    @Operation(summary = "Buscar produtos por fornecedor")
+    public ResponseEntity<List<ProdutoDto>> buscarPorFornecedor(@PathVariable("idFornecedor") Integer idFornecedor) {
+        List<Produto> produtos = service.buscarPorFornecedor(idFornecedor);
+        List<ProdutoDto> produtosDto = produtos.stream()
+                .map(produto -> new ProdutoDto(produto, transacaoService.buscarQuantidadeEmEstoque(produto.getId())))
+                .toList();
+        return ResponseEntity.ok(produtosDto);
     }
 }

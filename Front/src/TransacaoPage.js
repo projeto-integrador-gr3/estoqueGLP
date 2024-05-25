@@ -12,13 +12,14 @@ function TransacaoPage() {
   const [produtos, setProdutos] = useState([]);
   const [fornecedores, setFornecedores] = useState([]);
   const [selectedFornecedorId, setSelectedFornecedorId] = useState('');
-  const [volumeEstoque, setVolumeEstoque] = useState(0); 
-  const [estoqueAtual, setEstoqueAtual] = useState(''); // Novo estado para o estoque atual
+  const [volumeEstoque, setVolumeEstoque] = useState(0);
+  const [estoqueAtual, setEstoqueAtual] = useState('');
 
   useEffect(() => {
     const fetchProdutos = async () => {
       try {
         const response = await axios.get('http://localhost:8080/produtos');
+        console.log('Produtos recebidos:', response.data);  // Log de depuração
         setProdutos(response.data);
       } catch (error) {
         console.error('Erro ao buscar produtos:', error);
@@ -28,16 +29,17 @@ function TransacaoPage() {
     const fetchFornecedores = async () => {
       try {
         const response = await axios.get('http://localhost:8080/fornecedores');
+        console.log('Fornecedores recebidos:', response.data);  // Log de depuração
         setFornecedores(response.data);
       } catch (error) {
         console.error('Erro ao buscar fornecedores:', error);
       }
     };
 
-    // Buscar volume de itens no estoque
     const fetchVolumeEstoque = async () => {
       try {
         const response = await axios.get('http://localhost:8080/estoques/volume');
+        console.log('Volume de estoque recebido:', response.data);  // Log de depuração
         setVolumeEstoque(response.data.volume);
       } catch (error) {
         console.error('Erro ao buscar volume de estoque:', error);
@@ -46,7 +48,7 @@ function TransacaoPage() {
 
     fetchProdutos();
     fetchFornecedores();
-    fetchVolumeEstoque(); 
+    fetchVolumeEstoque();
   }, []);
 
   const handleProdutoIdChange = (event) => {
@@ -74,7 +76,6 @@ function TransacaoPage() {
         saida: quantidadeSaida
       });
       setSuccess('Transação cadastrada com sucesso!');
-      // Limpar os campos após o envio
       setProdutoId('');
       setQuantidadeEntrada(0);
       setQuantidadeSaida(0);
@@ -84,10 +85,10 @@ function TransacaoPage() {
     }
   };
 
-  // Função para buscar o estoque atual de um produto
   const handleBuscarEstoqueAtual = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/estoques/estoqueAtual?produtoId=${produtoId}`);
+      console.log('Estoque atual recebido:', response.data);  // Log de depuração
       setEstoqueAtual(response.data.estoqueAtual);
     } catch (error) {
       console.error('Erro ao buscar estoque atual:', error);
@@ -98,7 +99,7 @@ function TransacaoPage() {
     <div className="transacao-page" style={{ backgroundImage: `url(${gasBackground})` }}>
       <div className="transacao-form">
         <h2>Cadastrar Nova Transação</h2>
-        <p>Volume de Itens no Estoque: {volumeEstoque}</p> 
+        <p>Volume de Itens no Estoque: {volumeEstoque}</p>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="fornecedorId">
             <Form.Label>Fornecedor</Form.Label>
@@ -133,7 +134,6 @@ function TransacaoPage() {
         {success && <Alert variant="success" className="mt-3">{success}</Alert>}
       </div>
 
-      {/* Formulário para exibir o estoque atual */}
       <div className="estoque-form">
         <h2>Estoque Atual</h2>
         <Form.Group controlId="buscarEstoque">

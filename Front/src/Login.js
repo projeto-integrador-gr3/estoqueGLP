@@ -4,8 +4,7 @@ import { Form, Button, Col, Container, Row, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom'; 
 import axios from 'axios'; 
 
-function Login() {
-
+function Login({ setIsAuthenticated }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [error, setError] = useState('');
@@ -23,13 +22,10 @@ function Login() {
         senha: senha
       });
 
-      // Se o login for bem-sucedido, você pode salvar o token e redirecionar o usuário
       const { token, isAdmin } = response.data;
-
-      // Salve o token no localStorage (ou em um gerenciador de estado)
       localStorage.setItem('token', token);
       localStorage.setItem('isAdmin', isAdmin);
-
+      setIsAuthenticated(true);
       setSuccess('Usuário logado com sucesso!');
       setTimeout(() => {
         navigate('/transacoes');
@@ -57,7 +53,6 @@ function Login() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </Form.Group>
-
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Senha</Form.Label>
                 <Form.Control
